@@ -21,13 +21,15 @@ paid.
 ## How it works
 
 1. **Checkout** — `WC_Gateway_BML::process_payment()` creates a transaction via
-   `POST /transactions` (`includes/class-bml-client.php`), stores the returned
-   transaction id on the order, sets the order to *pending*, and redirects the
-   customer to the BML hosted page (`transaction['url']`).
+   `POST /public/v2/transactions` (`includes/class-bml-client.php`), passing the
+   amount in minor units, currency, and both a `redirectUrl` and a per-transaction
+   `webhook` pointing at the plugin's callback. It stores the returned transaction
+   id on the order, sets the order to *pending*, and redirects the customer to the
+   BML hosted page (`transaction['url']`).
 2. **Return / webhook** — BML redirects the browser back to, and also calls,
    `…/?wc-api=wc_gateway_bml&order_id=…&order_key=…`. The handler validates the
-   order key, re-fetches the transaction with `GET /transactions/{id}`, and acts
-   on its `state`:
+   order key, re-fetches the transaction with `GET /public/transactions/{id}`, and
+   acts on its `state`:
    - `CONFIRMED` → `payment_complete()` + empty cart.
    - `CANCELLED` / `EXPIRED` / `FAILED` → order marked *failed*.
    - anything else (`QR_CODE_GENERATED`, `RESERVED`, `PROCESSING`) → left *pending*.
@@ -45,7 +47,7 @@ Credentials come from the [BML Merchant Portal](https://dashboard.merchants.bank
 ## Sandbox testing checklist
 
 1. Set the store currency to MVR or USD.
-2. Enable the gateway, tick **Sandbox mode**, enter the sandbox API key and App ID, save.
+2. Enable the gateway, tick **Sandbox mode**, enter the sandbox API key, save.
 3. Place a test order → you should be redirected to the BML sandbox page.
 4. Complete the sandbox payment → you return to the order-received page, the order
    auto-completes, and `_bml_transaction_id` is saved in the order meta.

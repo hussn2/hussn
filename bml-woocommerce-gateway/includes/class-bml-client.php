@@ -17,9 +17,6 @@ class BML_Client {
 
 	const PROD_BASE_URL    = 'https://api.merchants.bankofmaldives.com.mv/public/';
 	const SANDBOX_BASE_URL = 'https://api.uat.merchants.bankofmaldives.com.mv/public/';
-	const API_VERSION      = '2.0';
-	const APP_VERSION      = 'bml-connect-php';
-	const SIGN_METHOD      = 'sha1';
 
 	/**
 	 * Merchant API key (sent as the Authorization header).
@@ -27,13 +24,6 @@ class BML_Client {
 	 * @var string
 	 */
 	private $api_key;
-
-	/**
-	 * Merchant application id.
-	 *
-	 * @var string
-	 */
-	private $app_id;
 
 	/**
 	 * Environment: "sandbox" or "production".
@@ -46,12 +36,10 @@ class BML_Client {
 	 * Constructor.
 	 *
 	 * @param string $api_key Merchant API key.
-	 * @param string $app_id  Merchant application id.
 	 * @param string $mode    "sandbox" or "production".
 	 */
-	public function __construct( $api_key, $app_id, $mode = 'production' ) {
+	public function __construct( $api_key, $mode = 'production' ) {
 		$this->api_key = $api_key;
-		$this->app_id  = $app_id;
 		$this->mode    = ( 'sandbox' === $mode ) ? 'sandbox' : 'production';
 	}
 
@@ -67,21 +55,16 @@ class BML_Client {
 	/**
 	 * Create a transaction.
 	 *
-	 * @param array $payload Transaction fields (amount, currency, localId, ...).
+	 * Uses the Connect API 2.0 endpoint (POST /public/v2/transactions). The
+	 * request body is sent as-is per the documented contract: amount (minor
+	 * units), currency, redirectUrl, webhook, localId, customerReference.
+	 *
+	 * @param array $payload Transaction fields (amount, currency, ...).
 	 * @return array|WP_Error Decoded response, or WP_Error on failure.
 	 */
 	public function create_transaction( array $payload ) {
-		$payload = array_merge(
-			array(
-				'apiVersion' => self::API_VERSION,
-				'appVersion' => self::APP_VERSION,
-				'signMethod' => self::SIGN_METHOD,
-			),
-			$payload
-		);
-
 		$response = wp_remote_post(
-			$this->base_url() . 'transactions',
+			$this->base_url() . 'v2/transactions',
 			array(
 				'timeout' => 45,
 				'headers' => $this->headers(),

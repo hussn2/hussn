@@ -59,25 +59,13 @@ msgstr ""
 msgid "Live API key"
 msgstr ""
 
-msgid "Production API key from the BML Merchant Portal."
-msgstr ""
-
-msgid "Live App ID"
-msgstr ""
-
-msgid "Production application id from the BML Merchant Portal."
+msgid "Production API key from the BML Merchant Portal (sent as the Authorization header)."
 msgstr ""
 
 msgid "Sandbox API key"
 msgstr ""
 
-msgid "Sandbox API key from the BML Merchant Portal."
-msgstr ""
-
-msgid "Sandbox App ID"
-msgstr ""
-
-msgid "Sandbox application id from the BML Merchant Portal."
+msgid "Sandbox API key from the BML Merchant Portal (sent as the Authorization header)."
 msgstr ""
 
 msgid "Debug log"

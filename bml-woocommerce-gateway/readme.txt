@@ -34,15 +34,15 @@ Bank of Maldives. "BML Connect" is a product of Bank of Maldives.
 1. Upload the `bml-woocommerce-gateway` folder to the `/wp-content/plugins/` directory, or install the zip via Plugins > Add New > Upload.
 2. Activate the plugin through the 'Plugins' menu in WordPress.
 3. Go to WooCommerce > Settings > Payments > BML Connect.
-4. Enable the gateway, enter your API key and App ID from the BML Merchant Portal, and save.
+4. Enable the gateway, enter your API key from the BML Merchant Portal, and save.
 5. Keep "Sandbox mode" enabled while testing; disable it to take live payments.
 
 == Frequently Asked Questions ==
 
-= Where do I get my API key and App ID? =
+= Where do I get my API key? =
 
 From the BML Merchant Portal at https://dashboard.merchants.bankofmaldives.com.mv. The
-sandbox and production environments use different credentials.
+sandbox and production environments use different API keys.
 
 = Which currencies are supported? =
 
