@@ -1,0 +1,23 @@
+{
+  "name": "stoplight-crawler",
+  "version": "1.0.0",
+  "description": "Crawl a Stoplight.io hosted documentation site and export the whole thing to a single PDF. Uses a real headless browser (so it gets past the bot-blocking that defeats curl/wget) plus the Stoplight platform TOC/sitemap API for reliable, ordered page discovery.",
+  "type": "module",
+  "bin": {
+    "stoplight-pdf": "src/cli.js"
+  },
+  "scripts": {
+    "start": "node src/cli.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "pdf-lib": "^1.17.1",
+    "puppeteer": "^22.15.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2"
+  },
+  "license": "MIT"
+}
