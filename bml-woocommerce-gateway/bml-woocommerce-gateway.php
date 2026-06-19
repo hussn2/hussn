@@ -3,16 +3,16 @@
  * Plugin Name: BML Connect Gateway for WooCommerce
  * Plugin URI: https://github.com/hussn2/hussn
  * Description: Accept online payments through BML Connect (Bank of Maldives hosted payment gateway). Supports classic and block-based checkout, MVR and USD.
- * Version: 1.0.0
+ * Version: 1.1.0
  * Author: hussn2
  * Author URI: https://github.com/hussn2
  * Text Domain: bml-woocommerce-gateway
  * Domain Path: /languages
  * Requires Plugins: woocommerce
- * Requires at least: 6.0
+ * Requires at least: 6.5
  * Requires PHP: 7.4
- * WC requires at least: 7.0
- * WC tested up to: 9.0
+ * WC requires at least: 8.2
+ * WC tested up to: 10.8
  * License: GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  *
@@ -21,7 +21,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'BML_WC_GATEWAY_VERSION', '1.0.0' );
+define( 'BML_WC_GATEWAY_VERSION', '1.1.0' );
 define( 'BML_WC_GATEWAY_FILE', __FILE__ );
 define( 'BML_WC_GATEWAY_PATH', plugin_dir_path( __FILE__ ) );
 define( 'BML_WC_GATEWAY_URL', plugin_dir_url( __FILE__ ) );

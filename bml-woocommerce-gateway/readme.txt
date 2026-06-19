@@ -1,10 +1,12 @@
 === BML Connect Gateway for WooCommerce ===
 Contributors: hussn2
 Tags: woocommerce, payment gateway, bml, bank of maldives, mvr
-Requires at least: 6.0
-Tested up to: 6.5
+Requires at least: 6.5
+Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.0.0
+WC requires at least: 8.2
+WC tested up to: 10.8
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -55,6 +57,10 @@ No. The customer is redirected to BML's hosted payment page. No card details are
 entered or stored on your site.
 
 == Changelog ==
+
+= 1.1.0 =
+* Tested with WordPress 7.0 and WooCommerce 10.8.
+* Raised minimum WordPress to 6.5 (for the `Requires Plugins` header) and minimum WooCommerce to 8.2.
 
 = 1.0.0 =
 * Initial release.
