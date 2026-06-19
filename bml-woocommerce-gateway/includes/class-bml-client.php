@@ -18,6 +18,7 @@ class BML_Client {
 	const PROD_BASE_URL    = 'https://api.merchants.bankofmaldives.com.mv/public/';
 	const SANDBOX_BASE_URL = 'https://api.uat.merchants.bankofmaldives.com.mv/public/';
 	const API_VERSION      = '2.0';
+	const APP_VERSION      = 'bml-connect-php';
 	const SIGN_METHOD      = 'sha1';
 
 	/**
@@ -73,8 +74,8 @@ class BML_Client {
 		$payload = array_merge(
 			array(
 				'apiVersion' => self::API_VERSION,
+				'appVersion' => self::APP_VERSION,
 				'signMethod' => self::SIGN_METHOD,
-				'appId'      => $this->app_id,
 			),
 			$payload
 		);
