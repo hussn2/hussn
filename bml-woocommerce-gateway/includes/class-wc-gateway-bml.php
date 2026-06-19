@@ -41,6 +41,13 @@ class WC_Gateway_BML extends WC_Payment_Gateway {
 	protected $api_key;
 
 	/**
+	 * Merchant application id.
+	 *
+	 * @var string
+	 */
+	protected $app_id;
+
+	/**
 	 * Shared logger instance.
 	 *
 	 * @var WC_Logger|null
@@ -67,6 +74,7 @@ class WC_Gateway_BML extends WC_Payment_Gateway {
 		$this->test_mode   = 'yes' === $this->get_option( 'test_mode' );
 		$this->debug       = 'yes' === $this->get_option( 'debug' );
 		$this->api_key     = $this->test_mode ? $this->get_option( 'sandbox_api_key' ) : $this->get_option( 'live_api_key' );
+		$this->app_id      = $this->test_mode ? $this->get_option( 'sandbox_app_id' ) : $this->get_option( 'live_app_id' );
 
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
 
@@ -111,10 +119,22 @@ class WC_Gateway_BML extends WC_Payment_Gateway {
 				'description' => __( 'Production API key from the BML Merchant Portal (sent as the Authorization header).', 'bml-woocommerce-gateway' ),
 				'default'     => '',
 			),
+			'live_app_id'     => array(
+				'title'       => __( 'Live App ID', 'bml-woocommerce-gateway' ),
+				'type'        => 'text',
+				'description' => __( 'Production application id from the BML Merchant Portal.', 'bml-woocommerce-gateway' ),
+				'default'     => '',
+			),
 			'sandbox_api_key' => array(
 				'title'       => __( 'Sandbox API key', 'bml-woocommerce-gateway' ),
 				'type'        => 'password',
 				'description' => __( 'Sandbox API key from the BML Merchant Portal (sent as the Authorization header).', 'bml-woocommerce-gateway' ),
+				'default'     => '',
+			),
+			'sandbox_app_id'  => array(
+				'title'       => __( 'Sandbox App ID', 'bml-woocommerce-gateway' ),
+				'type'        => 'text',
+				'description' => __( 'Sandbox application id from the BML Merchant Portal.', 'bml-woocommerce-gateway' ),
 				'default'     => '',
 			),
 			'debug'           => array(
@@ -145,7 +165,7 @@ class WC_Gateway_BML extends WC_Payment_Gateway {
 			return false;
 		}
 
-		if ( empty( $this->api_key ) ) {
+		if ( empty( $this->api_key ) || empty( $this->app_id ) ) {
 			return false;
 		}
 
@@ -158,7 +178,7 @@ class WC_Gateway_BML extends WC_Payment_Gateway {
 	 * @return BML_Client
 	 */
 	protected function get_client() {
-		return new BML_Client( $this->api_key, $this->test_mode ? 'sandbox' : 'production' );
+		return new BML_Client( $this->api_key, $this->app_id, $this->test_mode ? 'sandbox' : 'production' );
 	}
 
 	/**
@@ -189,7 +209,6 @@ class WC_Gateway_BML extends WC_Payment_Gateway {
 			'localId'           => (string) $order->get_id(),
 			'customerReference' => $order->get_order_number(),
 			'redirectUrl'       => $return_url,
-			'webhook'           => $return_url,
 		);
 
 		$this->log( 'Creating transaction for order #' . $order->get_id() . ': ' . wp_json_encode( $payload ) );

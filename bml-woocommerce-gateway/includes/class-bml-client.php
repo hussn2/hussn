@@ -17,6 +17,9 @@ class BML_Client {
 
 	const PROD_BASE_URL    = 'https://api.merchants.bankofmaldives.com.mv/public/';
 	const SANDBOX_BASE_URL = 'https://api.uat.merchants.bankofmaldives.com.mv/public/';
+	const API_VERSION      = '2.0';
+	const APP_VERSION      = 'bml-connect-php';
+	const SIGN_METHOD      = 'sha1';
 
 	/**
 	 * Merchant API key (sent as the Authorization header).
@@ -24,6 +27,13 @@ class BML_Client {
 	 * @var string
 	 */
 	private $api_key;
+
+	/**
+	 * Merchant application id.
+	 *
+	 * @var string
+	 */
+	private $app_id;
 
 	/**
 	 * Environment: "sandbox" or "production".
@@ -36,10 +46,12 @@ class BML_Client {
 	 * Constructor.
 	 *
 	 * @param string $api_key Merchant API key.
+	 * @param string $app_id  Merchant application id.
 	 * @param string $mode    "sandbox" or "production".
 	 */
-	public function __construct( $api_key, $mode = 'production' ) {
+	public function __construct( $api_key, $app_id, $mode = 'production' ) {
 		$this->api_key = $api_key;
+		$this->app_id  = $app_id;
 		$this->mode    = ( 'sandbox' === $mode ) ? 'sandbox' : 'production';
 	}
 
@@ -55,16 +67,28 @@ class BML_Client {
 	/**
 	 * Create a transaction.
 	 *
-	 * Uses the Connect API 2.0 endpoint (POST /public/v2/transactions). The
-	 * request body is sent as-is per the documented contract: amount (minor
-	 * units), currency, redirectUrl, webhook, localId, customerReference.
+	 * Mirrors the official bankofmaldives/bml-connect-php SDK: the request is
+	 * signed (sha1 over amount/currency/apiKey) and the apiVersion, appVersion
+	 * and signMethod fields are appended before POSTing to /public/transactions.
 	 *
-	 * @param array $payload Transaction fields (amount, currency, ...).
+	 * @param array $payload Transaction fields (amount, currency, localId, ...).
 	 * @return array|WP_Error Decoded response, or WP_Error on failure.
 	 */
 	public function create_transaction( array $payload ) {
+		if ( ! isset( $payload['amount'] ) || ! isset( $payload['currency'] ) ) {
+			return new WP_Error(
+				'bml_invalid_transaction',
+				__( 'amount and currency are required to sign a transaction.', 'bml-woocommerce-gateway' )
+			);
+		}
+
+		$payload['signature']  = $this->sign( $payload['amount'], $payload['currency'] );
+		$payload['apiVersion'] = self::API_VERSION;
+		$payload['appVersion'] = self::APP_VERSION;
+		$payload['signMethod'] = self::SIGN_METHOD;
+
 		$response = wp_remote_post(
-			$this->base_url() . 'v2/transactions',
+			$this->base_url() . 'transactions',
 			array(
 				'timeout' => 45,
 				'headers' => $this->headers(),
@@ -73,6 +97,20 @@ class BML_Client {
 		);
 
 		return $this->handle_response( $response );
+	}
+
+	/**
+	 * Compute the transaction signature exactly as BMLConnect\Crypt\Signature does:
+	 * sha1( "amount={amount}&currency={currency}&apiKey={apiKey}" ).
+	 *
+	 * @param int|string $amount   Amount in minor units.
+	 * @param string     $currency Currency code.
+	 * @return string SHA1 hex digest.
+	 */
+	private function sign( $amount, $currency ) {
+		$str = 'amount=' . $amount . '&currency=' . $currency . '&apiKey=' . $this->api_key;
+
+		return sha1( $str );
 	}
 
 	/**
