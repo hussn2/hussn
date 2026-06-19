@@ -1,0 +1,117 @@
+# Copyright (C) 2026 hussn2
+# This file is distributed under the GPL-2.0-or-later license.
+msgid ""
+msgstr ""
+"Project-Id-Version: BML Connect Gateway for WooCommerce 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Domain: bml-woocommerce-gateway\n"
+
+msgid "BML Connect Gateway for WooCommerce requires WooCommerce to be installed and active."
+msgstr ""
+
+msgid "Settings"
+msgstr ""
+
+msgid "BML Connect"
+msgstr ""
+
+msgid "Accept payments through BML Connect (Bank of Maldives). Customers are redirected to the BML hosted payment page to complete payment."
+msgstr ""
+
+msgid "Enable/Disable"
+msgstr ""
+
+msgid "Enable BML Connect"
+msgstr ""
+
+msgid "Title"
+msgstr ""
+
+msgid "Payment method title shown to customers at checkout."
+msgstr ""
+
+msgid "Card / BML Connect"
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "Payment method description shown to customers at checkout."
+msgstr ""
+
+msgid "Pay securely via BML Connect. You will be redirected to the Bank of Maldives payment page."
+msgstr ""
+
+msgid "Sandbox mode"
+msgstr ""
+
+msgid "Enable sandbox (test) mode"
+msgstr ""
+
+msgid "Use the BML Connect sandbox environment for testing. Disable to take live payments."
+msgstr ""
+
+msgid "Live API key"
+msgstr ""
+
+msgid "Production API key from the BML Merchant Portal (sent as the Authorization header)."
+msgstr ""
+
+msgid "Live App ID"
+msgstr ""
+
+msgid "Production application id from the BML Merchant Portal."
+msgstr ""
+
+msgid "Sandbox API key"
+msgstr ""
+
+msgid "Sandbox API key from the BML Merchant Portal (sent as the Authorization header)."
+msgstr ""
+
+msgid "Sandbox App ID"
+msgstr ""
+
+msgid "Sandbox application id from the BML Merchant Portal."
+msgstr ""
+
+msgid "amount and currency are required to sign a transaction."
+msgstr ""
+
+msgid "Debug log"
+msgstr ""
+
+msgid "Enable logging"
+msgstr ""
+
+msgid "Unable to start the BML payment. Please try again or choose another payment method."
+msgstr ""
+
+msgid "BML Connect did not return a payment URL. Please try again."
+msgstr ""
+
+msgid "Awaiting BML Connect payment."
+msgstr ""
+
+msgid "Invalid BML payment callback."
+msgstr ""
+
+msgid "No BML transaction was found for this order."
+msgstr ""
+
+msgid "We could not verify your payment with BML. Please contact us if you were charged."
+msgstr ""
+
+msgid "Your BML payment was not completed. Please try again."
+msgstr ""
+
+msgid "Your BML payment is being processed. We will update your order once it is confirmed."
+msgstr ""
+
+msgid "BML Connect returned an invalid response."
+msgstr ""

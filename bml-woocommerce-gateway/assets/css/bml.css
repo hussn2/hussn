@@ -1,0 +1,6 @@
+/* Minimal styling for the BML Connect payment method. */
+.payment_method_bml img {
+	max-height: 24px;
+	margin-left: 8px;
+	vertical-align: middle;
+}
