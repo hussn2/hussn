@@ -1,0 +1,14 @@
+# Local environment
+.env
+
+# WordPress core / uploads are managed by Docker volumes, not tracked here.
+# Only our custom theme under wp-content/themes/hussn is version-controlled.
+wp-content/uploads/
+wp-content/upgrade/
+wp-content/cache/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.log
+node_modules/
